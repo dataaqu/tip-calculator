@@ -26,61 +26,137 @@ const tipAmount = document.querySelector(".tip__amount");
 const perPerson = document.querySelector(".per__person");
 
 //global
-let percentage = 15;
+let billAmount = 0;
+let tipValue = 0;
+let personAmount;
+billInput.value = billAmount;
+let activeBtn = null;
 
 //functions
 
-const resetActive = function () {
-  btns.forEach((btn) => btn.classList.remove("active"));
+const resetAll = function () {
+  billInput.value = "";
+  billInput.style.opacity = "0.35";
+  billInput.classList.remove("active__custom");
+
+  numPeople.value = "";
+  numPeople.style.opacity = "0.35";
+
+  tipAmount.textContent = "0.00";
+  perPerson.textContent = "0.00";
+
+  btns.forEach((el) => el.classList.remove("active"));
+
+  reset.classList.add("disabled");
+  customInput.value = "Custom";
+  customInput.classList.remove("active__custom");
 };
 
-const btnValues = function () {
-  resetActive();
-  btns.forEach((el) => {
-    el.addEventListener("click", function (ev) {
-      const valuex = parseFloat(ev.target.textContent);
-      console.log(valuex);
-    });
-  });
+resetAll();
+
+const startAll = function () {
+  billInput.style.opacity = "1";
+  numPeople.style.opacity = "1";
+  reset.classList.remove("disabled");
 };
 
+const inputDisable = function () {
+  if (billInput.value == "" || billInput.value == 0) {
+    resetAll();
+  } else {
+    billInput.classList.add("active__custom");
+  }
+};
 
+const billValue = function () {
+  billAmount = billInput.value;
+  calcTip();
+  startAll();
+  inputDisable();
+};
+
+const numPeopleValue = function () {
+  personAmount = numPeople.value;
+  if (numPeople.value == 0 || numPeople.value == "") {
+    numPeople.classList.add("error__outline");
+    errorLabel.style.visibility = "visible";
+  } else {
+    numPeople.classList.remove("error__outline");
+    errorLabel.style.visibility = "hidden";
+  }
+  calcTip();
+  startAll();
+};
+
+const customValue = function () {
+  tipValue = +customInput.value;
+
+  if (activeBtn) {
+    activeBtn.classList.remove("active");
+  }
+
+  if (customInput.value !== "") {
+    customInput.classList.add("active__custom");
+  } else {
+    customInput.classList.remove("active__custom");
+  }
+
+  calcTip();
+  startAll();
+};
 
 const calcTip = function () {
-  btnValues();
-  const bill = +billInput.value;
-  const personNum = +numPeople.value;
-  const tip = (bill * percentage) / 100;
-  const finalBill = (bill + tip) / personNum;
+  const tipPerPerson = (billAmount * tipValue) / 100 / personAmount;
+  const billPerPerson = billAmount / personAmount + tipPerPerson;
 
-  if (personNum < 1) {
-    errorLabel.style.visibility = "visible";
-    numPeople.classList.add("error__outline");
-  } else {
-    errorLabel.style.visibility = "hidden";
-    numPeople.classList.remove("error__outline");
-    perPerson.textContent = `$${finalBill.toFixed(2)}`;
-    tipAmount.textContent = `$${(tip / personNum).toFixed(2)}`;
-  }
-
-  if (billInput.value !== "" && numPeople.value !== "") {
-    billInput.classList.add("outline");
-  } else {
-    billInput.classList.remove("outline");
+  if (personAmount >= 1) {
+    tipAmount.textContent = `$${tipPerPerson.toFixed(2)}`;
+    perPerson.textContent = `$${billPerPerson.toFixed(2)}`;
   }
 };
 
-calcTip();
+const btnValue = function () {
+  btns.forEach((btn) =>
+    btn.addEventListener("click", function (ev) {
+      if (activeBtn) {
+        activeBtn.classList.remove("active");
+      }
 
+      btn.classList.add("active");
+      activeBtn = btn;
+      if (ev.target.textContent === btn.textContent) {
+        tipValue = parseFloat(ev.target.textContent);
+      }
+    })
+  );
+  calcTip();
+};
 
-const resetAll = function() {
+btnValue();
 
-}
+// Event listeners
 
-// reset.addEventListener('click',function(){
-//     console.log( customInput.value, numPeople.value);
-// })
+billInput.addEventListener("input", billValue);
+numPeople.addEventListener("input", numPeopleValue);
+customInput.addEventListener("input", customValue);
+reset.addEventListener("click", resetAll);
 
-//Event listeners
-billInput.addEventListener("input", calcTip);
-numPeople.addEventListener("input", calcTip);
+btns.forEach(function (value) {
+  value.addEventListener("click", btnValue);
+});
+
+// let btnValue;
+
+// const btnValues = function () {
+//   btns.forEach((el) => {
+//     el.addEventListener("click", function (ev) {
+//       const value = parseFloat(ev.currentTarget.textContent);
+//       console.log(`Clicked button value: ${value}`);
+//       btnValue = value;
+//       console.log(`btnValue after click: ${btnValue}`);
+//       resetActive();
+//     });
+//   });
+//     console.log(`dat ${btnValue}`);
+//   return btnValue
+// };

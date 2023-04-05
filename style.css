@@ -114,7 +114,6 @@ input::-webkit-inner-spin-button {
   margin-top: 1.6rem;
 }
 
-
 .select__tip p {
   font-weight: 700;
   font-size: 1.6rem;
@@ -322,6 +321,7 @@ span {
 }
 
 .disabled {
+  background: #0d686d;
   pointer-events: none;
 }
 .reset:active {
@@ -340,6 +340,11 @@ span {
 .tips:active {
   background-color: #26c2ae;
   transform: translateY(2px);
+}
+
+.active__custom {
+  border: 3px solid #26c2ae !important;
+  color: #00474b !important;
 }
 
 @media screen and (min-width: 1440px) {
