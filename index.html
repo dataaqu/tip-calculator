@@ -21,39 +21,36 @@
     </header>
 
     <section class="app">
-      
       <div class="select__tip">
         <div class="first__input">
           <p class="bills">Bill</p>
           <img src="./images/icon-dollar.svg" alt="dollar icon" id="dollar" />
-          <input type="number" id="bill" value="142.55" />
+          <input type="number" id="bill" value="145.55" class="btn"/>
         </div>
         <div class="tip__selector">
-          <p >Select Tip %</p>
-          <p id="tip__value">15%</p>
+          <p>Select Tip %</p>
+          
         </div>
-        
+
         <div class="tip__grid">
-          <div class="div5 ">5%</div>
-          <div class="div10 active">10%</div>
-          <div class="div15">15%</div>
-          <div class="div25">25%</div>
-          <div class="div50">50%</div>
+          <button class="tips div5">5%</button>
+          <button class="tips div10">10%</button>
+          <button class="tips div15 active">15%</button>
+          <button class="tips div25">25%</button>
+          <button class="tips div50">50%</button>
           <input type="number" id="custom" placeholder="Custom" />
         </div>
 
         <div class="select__people">
           <div class="label">
-            <p>Number of People</p> 
+            <p>Number of People</p>
             <p class="error">Can't be zero</p>
           </div>
-         
+
           <img src="./images/icon-person.svg" alt="person icon" id="person" />
-          <input type="number" id="people__number" value="5" />
+          <input type="number" id="people__number" value="5" class="inputo"/>
         </div>
       </div>
-
-     
 
       <div class="tip__display">
         <div class="tip__content">
@@ -63,7 +60,7 @@
               <span>/ person</span>
             </p>
 
-            <p class="amount">$4.27</p>
+            <p class="amount tip__amount">$4.27</p>
           </div>
 
           <div class="text">
@@ -71,12 +68,16 @@
               Total <br />
               <span>/ person</span>
             </p>
-            <p class="amount">$32.79</p>
+            <p class=" amount per__person">$32.79</p>
           </div>
 
-          <button class="reset">Reset</button>
+          <div class="reset">
+            <p>Reset</p>
+          </div>
         </div>
       </div>
     </section>
+
+    <script src="./index.js"></script>
   </body>
 </html>
